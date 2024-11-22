@@ -92,16 +92,16 @@ def generate_launch_description():
       arguments=['arm_controller', '--controller-manager', '/controller_manager']
   )
 
-  gripper_controller = Node(
-      package='controller_manager',
-      executable='spawner',
-      arguments=['grip_controller', '--controller-manager', '/controller_manager']
-  )
-
   gripper_action_controller = Node(
       package='controller_manager',
       executable='spawner',
       arguments=['grip_action_controller', '--controller-manager', '/controller_manager']
+  )
+
+  gripper_controller = Node(
+      package='controller_manager',
+      executable='spawner',
+      arguments=['grip_controller', '--controller-manager', '/controller_manager']
   )
 
   # 用于顺序启动一系列ROS2控制器
@@ -115,15 +115,15 @@ def generate_launch_description():
     target_action=joint_state_broadcaster,
     on_exit=[arm_controller],))
 
-  gripper_controller_handler = RegisterEventHandler(
-    event_handler=OnProcessExit(
-    target_action=arm_controller,
-    on_exit=[gripper_controller],))
-    
   gripper_action_controller_handler = RegisterEventHandler(
     event_handler=OnProcessExit(
+    target_action=arm_controller,
+    on_exit=[gripper_action_controller],))
+    
+  gripper_controller_handler = RegisterEventHandler(
+    event_handler=OnProcessExit(
     target_action=gripper_controller,
-    on_exit=[gripper_action_controller],))     
+    on_exit=[gripper_controller],))     
     
   return LaunchDescription([
     joint_state_broadcaster_handler,
