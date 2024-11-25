@@ -17,4 +17,5 @@ bash src/robot.sh
 ```
 # Todo
 - ~~The gripper is still unstable and needs to be improved...~~
-- Use the Open Motion Planning Library to complete obstacle avoidance for robotic arms
+- ~~Use the Open Motion Planning Library to complete obstacle avoidance for robotic arms~~
+- Try to use the movit2 task constructor
